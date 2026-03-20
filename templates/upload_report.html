@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medical Report Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet" />
+    <script
+        src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000"
+        data-border-radius="small"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-sky-100 to-sky-200">
+    <header class="fixed w-full bg-sky-800/90 backdrop-blur-sm z-50 border-b border-sky-700">
+        <nav class="max-w-8xl mx-auto px-5">
+            <div class="flex items-center justify-between h-20 bg-transparent border-b border-sky-700">
+                <div class="flex items-center gap-12">
+                    <a href="#" class="flex items-center gap-2">
+                        <img src="static/images/logo.png" alt="InsightCare AI" class="h-10" />
+                    </a>
+                    <div class="hidden lg:flex items-center gap-8">
+                        <a href="/" class="text-white hover:text-sky-200">Home</a>
+                        <a href="/#services" class="text-white hover:text-sky-200">Services</a>
+                        <a href="/#how_it_works" class="text-white hover:text-sky-200">How It Works</a>
+                        <a href="/#about" class="text-white hover:text-sky-200">About</a>
+                        <a href="/#contact_us" class="text-white hover:text-sky-200">Contact</a>
+                    </div>
+                </div>
+
+                <button class="lg:hidden text-white hover:text-sky-200"
+                    onclick="document.getElementById(&#39;mobile-menu&#39;).classList.toggle(&#39;hidden&#39;)"><i
+                        class="fas fa-bars text-2xl"></i></button>
+            </div>
+            <div id="mobile-menu"
+                class="lg:hidden hidden fixed w-full bg-sky-800 top-20 left-0 border-b border-sky-700 py-4">
+                <div class="flex flex-col items-center gap-4">
+                    <a href="index.html" class="text-white hover:text-sky-200">Home</a>
+                    <a href="services.html" class="text-white hover:text-sky-200">Services</a>
+                    <a href="index.html#how_it_works" class="text-white hover:text-sky-200">How It Works</a>
+                    <a href="about.html" class="text-white hover:text-sky-200">About</a>
+                    <a href="index.html#contact_us" class="text-white hover:text-sky-200">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="relative max-w-3xl mx-auto pb-8 sm:pb-12 px-4 pt-20 sm:px-0">
+        <div class="bg-white/80 backdrop-blur-sm shadow-sm rounded-lg p-4 sm:p-8 mt-5">
+            <form action="/upload_report" method="POST" enctype="multipart/form-data">
+                <div class="mb-8">
+                    <label for="disease" class="block text-sm font-medium text-gray-700 mb-2">Select Disease
+                        Type</label>
+                    <select id="disease_type" name="disease_type"
+                        class="block w-full py-3 pl-4 pr-10 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 rounded-lg">
+                        <option value="" disabled selected>Choose a disease type</option>
+                        <option value="kidney">Chronic Kidney Disease</option>
+                        <option value="lung">Lung Disease</option>
+                    </select>
+                </div>
+                <div class="mb-8">
+                    <div class="border-2 border-dashed border-sky-300 rounded-lg p-4 sm:p-8 bg-sky-50/50 text-center"
+                        id="drop-zone">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-sky-500 mb-4"></i>
+                        <div class="text-sm text-gray-600">
+                            <label class="relative cursor-pointer" for="image-upload">
+                                <span class="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-600">Choose
+                                    File</span>
+                                <input type="file" id="image-upload" name="file" class="hidden"
+                                    accept=".jpg,.jpeg,.png" />
+                            </label>
+                            <p class="mt-2">or drag and drop</p>
+                            <p class="text-xs text-gray-500 mt-1">Supported formats: JPG, PNG</p>
+                        </div>
+                    </div>
+                    <div id="preview" class="hidden mt-4">
+                        <div class="relative">
+                            <img src="" alt="Preview" class="w-full h-48 object-cover rounded-lg" id="preview-image" />
+                            <button id="remove-preview"
+                                class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p id="upload-text" class="text-gray-700 font-medium mb-4 hidden text-center"></p>
+                <p id="error-message" class="text-red-600 font-medium mb-4 text-center">
+                    {{ error }}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 mb-6 sm:mb-8">
+                    <button type="submit"
+                        class="flex-1 bg-sky-500 text-white px-6 py-3 rounded-lg hover:bg-sky-600 flex items-center justify-center">
+                        <i class="fas fa-upload mr-2"></i> Upload Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer class="bg-sky-900 text-white py-5">
+        <div class="max-w-8xl mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <img src="static/images/logo.png" alt="InsightCare AI" class="h-8 brightness-0 invert" />
+                    </div>
+                    <p class="text-gray-400">Revolutionizing healthcare diagnosis with explainable AI technology.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">1234 Healthcare Ave</li>
+                        <li class="text-gray-400">Suite 500</li>
+                        <li class="text-gray-400">San Francisco, CA 94105</li>
+                        <li class="text-gray-400">support@insightcare.ai</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Stay updated with our latest developments.</p>
+                    <form class="flex flex-col sm:flex-row gap-2 w-full">
+                        <input type="email" placeholder="Enter your email"
+                            class="flex-1 px-4 py-2 bg-sky-800 border border-sky-700 rounded-lg text-white placeholder-gray-400" />
+                        <button class="bg-custom text-white px-6 py-2 !rounded-button hover:bg-custom/90">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div
+                class="border-t border-sky-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+                <p class="text-gray-400">© 2024 InsightCare AI. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const fileInput = document.getElementById('image-upload');
+        const preview = document.getElementById('preview');
+        const previewImage = document.getElementById('preview-image');
+        const removeButton = document.getElementById('remove-preview');
+        const dropZone = document.getElementById('drop-zone');
+
+        fileInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        removeButton.addEventListener('click', function () {
+            preview.classList.add('hidden');
+            fileInput.value = '';
+        });
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('border-sky-500'), false);
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('border-sky-500'), false);
+        });
+        dropZone.addEventListener('drop', function (e) {
+            const dt = e.dataTransfer;
+            const file = dt.files[0];
+            if (file) {
+                fileInput.files = dt.files;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById("disease_type").addEventListener("change", function () {
+            var uploadText = document.getElementById("upload-text");
+            if (this.value === "kidney") {
+                uploadText.textContent = "Upload Report";
+                uploadText.classList.remove("hidden");
+            } else if (this.value === "lung") {
+                uploadText.textContent = "Upload X-Ray Image";
+                uploadText.classList.remove("hidden");
+            } else {
+                uploadText.classList.add("hidden");
+            }
+        });
+
+        const errorMessage = "{{ error }}"; // Get the error from your backend
+
+        if (errorMessage) {
+            const errorElement = document.getElementById("error-message");
+            errorElement.textContent = errorMessage;
+            errorElement.classList.remove("hidden");
+        }
+    </script>
+</body>
+
+</html>

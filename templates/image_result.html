@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Analysis Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet" />
+    <script
+        src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000"
+        data-border-radius="small"></script>
+</head>
+
+<body class="bg-gradient-to-b from-sky-400 to-white min-h-screen">
+    <header class="fixed w-full bg-sky-800/90 backdrop-blur-sm z-50 border-b border-sky-700">
+        <nav class="max-w-8xl mx-auto px-5">
+            <div class="flex items-center justify-between h-20 bg-transparent border-b border-sky-700">
+                <div class="flex items-center gap-12">
+                    <a href="#" class="flex items-center gap-2">
+                        <img src="static/images/logo.png" alt="InsightCare AI" class="h-10" />
+                    </a>
+                    <div class="hidden lg:flex items-center gap-8">
+                        <a href="/" class="text-white hover:text-sky-200">Home</a>
+                        <a href="/#services" class="text-white hover:text-sky-200">Services</a>
+                        <a href="/#how_it_works" class="text-white hover:text-sky-200">How It Works</a>
+                        <a href="/#about" class="text-white hover:text-sky-200">About</a>
+                        <a href="/#contact_us" class="text-white hover:text-sky-200">Contact</a>
+                    </div>
+                </div>
+
+                <button class="lg:hidden text-white hover:text-sky-200"
+                    onclick="document.getElementById(&#39;mobile-menu&#39;).classList.toggle(&#39;hidden&#39;)"><i
+                        class="fas fa-bars text-2xl"></i></button>
+            </div>
+            <div id="mobile-menu"
+                class="lg:hidden hidden fixed w-full bg-sky-800 top-20 left-0 border-b border-sky-700 py-4">
+                <div class="flex flex-col items-center gap-4">
+                    <a href="index.html" class="text-white hover:text-sky-200">Home</a>
+                    <a href="services.html" class="text-white hover:text-sky-200">Services</a>
+                    <a href="index.html#how_it_works" class="text-white hover:text-sky-200">How It Works</a>
+                    <a href="about.html" class="text-white hover:text-sky-200">About</a>
+                    <a href="index.html#contact_us" class="text-white hover:text-sky-200">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <div class="bg-white/80 backdrop-blur-sm shadow-sm rounded-lg p-4 sm:p-8 mt-5">
+            <div class="p-6">
+                <div class="mb-8">
+                    <h1 class="text-2xl font-semibold text-gray-900 mb-4">Lung X-Ray image Analysis Results</h1>
+                    <div class="bg-sky-200/50 backdrop-blur-sm rounded-lg p-6">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 gap-2">
+                            <span class="text-lg font-medium text-gray-700">{{ predicted_class }} Detected
+                            </span>
+                            <span class="text-2xl font-bold text-custom">{{(predicted_probability * 100) |
+                                round(2) }}</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-custom h-2.5 rounded-full" style="width:{{ (predicted_probability * 100) |
+                                round(2) }}%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-8">
+                    <div class="flex justify-center items-center">
+                        <img src="data:image/jpeg;base64,{{ original_image }}" alt="Input Image"
+                            class="w-[800px] h-auto rounded-lg" />
+                    </div>
+                    <div class="flex justify-center items-center">
+                        <img src="data:image/jpeg;base64,{{ gradcam_image }}" alt="Result Image"
+                            class="w-[800px] h-auto rounded-lg" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <footer class="bg-sky-900 text-white py-5">
+        <div class="max-w-8xl mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <img src="static/images/logo.png" alt="InsightCare AI" class="h-8 brightness-0 invert" />
+                    </div>
+                    <p class="text-gray-400">Revolutionizing healthcare diagnosis with explainable AI technology.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">1234 Healthcare Ave</li>
+                        <li class="text-gray-400">Suite 500</li>
+                        <li class="text-gray-400">San Francisco, CA 94105</li>
+                        <li class="text-gray-400">support@insightcare.ai</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Stay updated with our latest developments.</p>
+                    <form class="flex flex-col sm:flex-row gap-2 w-full">
+                        <input type="email" placeholder="Enter your email"
+                            class="flex-1 px-4 py-2 bg-sky-800 border border-sky-700 rounded-lg text-white placeholder-gray-400" />
+                        <button class="bg-custom text-white px-6 py-2 !rounded-button hover:bg-custom/90">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div
+                class="border-t border-sky-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+                <p class="text-gray-400">© 2024 InsightCare AI. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

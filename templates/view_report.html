@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet" />
+    <script
+        src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000"
+        data-border-radius="small"></script>
+
+
+
+<body class="min-h-screen font-inter bg-gradient-to-b from-sky-200 to-white">
+    <header class="fixed w-full bg-sky-800/90 backdrop-blur-sm z-50 border-b border-sky-700">
+        <nav class="max-w-8xl mx-auto px-5">
+            <div class="flex items-center justify-between h-20 bg-transparent border-b border-sky-700">
+                <div class="flex items-center gap-12">
+                    <a href="#" class="flex items-center gap-2">
+                        <img src="static/images/logo.png" alt="InsightCare AI" class="h-10" />
+                    </a>
+                    <div class="hidden lg:flex items-center gap-8">
+                        <a href="/" class="text-white hover:text-sky-200">Home</a>
+                        <a href="/#services" class="text-white hover:text-sky-200">Services</a>
+                        <a href="/#how_it_works" class="text-white hover:text-sky-200">How It Works</a>
+                        <a href="/#about" class="text-white hover:text-sky-200">About</a>
+                        <a href="/#contact_us" class="text-white hover:text-sky-200">Contact</a>
+                    </div>
+                </div>
+
+                <button class="lg:hidden text-white hover:text-sky-200"
+                    onclick="document.getElementById(&#39;mobile-menu&#39;).classList.toggle(&#39;hidden&#39;)"><i
+                        class="fas fa-bars text-2xl"></i></button>
+            </div>
+            <div id="mobile-menu"
+                class="lg:hidden hidden fixed w-full bg-sky-800 top-20 left-0 border-b border-sky-700 py-4">
+                <div class="flex flex-col items-center gap-4">
+                    <a href="index.html" class="text-white hover:text-sky-200">Home</a>
+                    <a href="services.html" class="text-white hover:text-sky-200">Services</a>
+                    <a href="index.html#how_it_works" class="text-white hover:text-sky-200">How It Works</a>
+                    <a href="about.html" class="text-white hover:text-sky-200">About</a>
+                    <a href="index.html#contact_us" class="text-white hover:text-sky-200">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+
+
+        <div class="mt-10 max-w-8xl mx-auto px-2 sm:px-4 lg:px-8">
+            <header class="py-4 sm:py-6">
+                <div class="flex items-center">
+                    <a href="/"><button class="flex items-center text-gray-600 hover:text-gray-900 !rounded-button">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Back
+                        </button></a>
+                    <h1 class="ml-4 text-2xl font-semibold text-gray-900">Patient Details</h1>
+                </div>
+            </header>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 mb-20">
+                <div class="col-span-1 lg:col-span-5">
+                    <div
+                        class="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm border border-gray-200 p-4 h-[400px] lg:h-[800px] overflow-y-auto mb-4 lg:mb-0">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-lg font-medium text-gray-900">Document Preview</h2>
+                            <button class="text-custom hover:text-custom-600 !rounded-button">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                        <img src="{{ url_for('uploaded_file', filename=report_image) }}" alt="Uploaded Report"
+                            style="max-width: 100%; height: auto;">
+                    </div>
+                </div>
+                <div class="col-span-1 lg:col-span-7">
+                    <div class="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm border border-gray-200 p-6">
+                        <h2 class="text-lg font-medium text-gray-900 mb-6">Patient Information</h2>
+                        <div class="space-y-6">
+                            <form action="{{ url_for('predict') }}" method="POST">
+                                <div class="col-span-1 lg:col-span-7">
+                                    <div
+                                        class="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm border border-gray-200 p-6">
+                                        <h2 class="text-lg font-medium text-gray-900 mb-6">Patient Information</h2>
+
+                                        <div class="space-y-6">
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                                                <!-- Age -->
+                                                <div class="relative">
+                                                    <input type="hidden" name="disease_type" id="disease_type"
+                                                        value="{{ disease_type }}">
+
+                                                    <label
+                                                        class="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                                                    <input type="number" name="age"
+                                                        value="{{ ckd_data.get('age', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Blood Pressure -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Blood
+                                                        Pressure (bp)</label>
+                                                    <input type="text" name="bp" value="{{ ckd_data.get('bp', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Specific Gravity -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Specific
+                                                        Gravity (sg)</label>
+                                                    <input type="text" name="sg" value="{{ ckd_data.get('sg', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Albumin -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Albumin
+                                                        (al)</label>
+                                                    <input type="text" name="al" value="{{ ckd_data.get('al', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Sugar -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Sugar
+                                                        (su)</label>
+                                                    <input type="text" name="su" value="{{ ckd_data.get('su', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Red Blood Cells -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Red
+                                                        Blood
+                                                        Cells (rbc)</label>
+                                                    <input type="text" name="rbc" value="{{ ckd_data.get('rbc', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Pus Cell -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Pus Cell
+                                                        (pc)</label>
+                                                    <input type="text" name="pc" value="{{ ckd_data.get('pc', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Pus Cell Clumps -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Pus Cell
+                                                        Clumps (pcc)</label>
+                                                    <input type="text" name="pcc" value="{{ ckd_data.get('pcc', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Bacteria -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Bacteria
+                                                        (ba)</label>
+                                                    <input type="text" name="ba" value="{{ ckd_data.get('ba', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Blood Glucose Random -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Blood
+                                                        Glucose Random (bgr)</label>
+                                                    <input type="text" name="bgr" value="{{ ckd_data.get('bgr', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Blood Urea -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Blood
+                                                        Urea
+                                                        (bu)</label>
+                                                    <input type="text" name="bu" value="{{ ckd_data.get('bu', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Serum Creatinine -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Serum
+                                                        Creatinine (sc)</label>
+                                                    <input type="text" name="sc" value="{{ ckd_data.get('sc', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Sodium -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Sodium
+                                                        (sod)</label>
+                                                    <input type="text" name="sod" value="{{ ckd_data.get('sod', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Potassium -->
+                                                <div class="relative">
+                                                    <label
+                                                        class="block text-sm font-medium text-gray-700 mb-2">Potassium
+                                                        (pot)</label>
+                                                    <input type="text" name="pot" value="{{ ckd_data.get('pot', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Hemoglobin -->
+                                                <div class="relative">
+                                                    <label
+                                                        class="block text-sm font-medium text-gray-700 mb-2">Hemoglobin
+                                                        (hemo)</label>
+                                                    <input type="text" name="hemo"
+                                                        value="{{ ckd_data.get('hemo', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Packed Cell Volume -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Packed
+                                                        Cell
+                                                        Volume (pcv)</label>
+                                                    <input type="text" name="pcv" value="{{ ckd_data.get('pcv', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- White Blood Cell Count -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">White
+                                                        Blood
+                                                        Cell Count (wc)</label>
+                                                    <input type="text" name="wc" value="{{ ckd_data.get('wc', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Red Blood Cell Count -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Red
+                                                        Blood
+                                                        Cell Count (rc)</label>
+                                                    <input type="text" name="rc" value="{{ ckd_data.get('rc', '') }}"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button" />
+                                                </div>
+                                                <!-- Hypertension -->
+                                                <div class="relative">
+                                                    <label
+                                                        class="block text-sm font-medium text-gray-700 mb-2">Hypertension
+                                                        (htn)</label>
+                                                    <select name="htn"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button">
+                                                        <option value="Yes" {% if ckd_data.get('htn')=='Yes' %} selected
+                                                            {% endif %}>Yes</option>
+                                                        <option value="No" {% if ckd_data.get('htn')=='No' %} selected
+                                                            {% endif %}>No</option>
+                                                    </select>
+                                                </div>
+                                                <!-- Diabetes Mellitus -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Diabetes
+                                                        Mellitus (dm)</label>
+                                                    <select name="dm"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button">
+                                                        <option value="Yes" {% if ckd_data.get('dm')=='Yes' %} selected
+                                                            {% endif %}>Yes</option>
+                                                        <option value="No" {% if ckd_data.get('dm')=='No' %} selected {%
+                                                            endif %}>No</option>
+                                                    </select>
+                                                </div>
+                                                <!-- Coronary Artery Disease -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Coronary
+                                                        Artery Disease (cad)</label>
+                                                    <select name="cad"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button">
+                                                        <option value="Yes" {% if ckd_data.get('cad')=='Yes' %} selected
+                                                            {% endif %}>Yes</option>
+                                                        <option value="No" {% if ckd_data.get('cad')=='No' %} selected
+                                                            {% endif %}>No</option>
+                                                    </select>
+                                                </div>
+                                                <!-- Appetite -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Appetite
+                                                        (appet)</label>
+                                                    <select name="appet"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button">
+                                                        <option value="Good" {% if ckd_data.get('appet')=='Good' %}
+                                                            selected {% endif %}>Good</option>
+                                                        <option value="Poor" {% if ckd_data.get('appet')=='Poor' %}
+                                                            selected {% endif %}>Poor</option>
+                                                    </select>
+                                                </div>
+                                                <!-- Pedal Edema -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Pedal
+                                                        Edema
+                                                        (pe)</label>
+                                                    <select name="pe"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button">
+                                                        <option value="Yes" {% if ckd_data.get('pe')=='Yes' %} selected
+                                                            {% endif %}>Yes</option>
+                                                        <option value="No" {% if ckd_data.get('pe')=='No' %} selected {%
+                                                            endif %}>No</option>
+                                                    </select>
+                                                </div>
+                                                <!-- Anemia -->
+                                                <div class="relative">
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Anemia
+                                                        (ane)</label>
+                                                    <select name="ane"
+                                                        class="w-full border-gray-300 rounded-md !rounded-button">
+                                                        <option value="Yes" {% if ckd_data.get('ane')=='Yes' %} selected
+                                                            {% endif %}>Yes</option>
+                                                        <option value="No" {% if ckd_data.get('ane')=='No' %} selected
+                                                            {% endif %}>No</option>
+                                                    </select>
+                                                </div>
+
+                                                <!-- Submit Button -->
+                                                <div class="relative">
+                                                    <button type="submit"
+                                                        class="w-full bg-blue-500 text-white rounded-md py-2">Predict
+                                                        Disease</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+    <footer class="bg-sky-900 text-white py-5">
+        <div class="max-w-8xl mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <img src="static/images/logo.png" alt="InsightCare AI" class="h-8 brightness-0 invert" />
+                    </div>
+                    <p class="text-gray-400">Revolutionizing healthcare diagnosis with explainable AI technology.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">1234 Healthcare Ave</li>
+                        <li class="text-gray-400">Suite 500</li>
+                        <li class="text-gray-400">San Francisco, CA 94105</li>
+                        <li class="text-gray-400">support@insightcare.ai</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Stay updated with our latest developments.</p>
+                    <form class="flex flex-col sm:flex-row gap-2 w-full">
+                        <input type="email" placeholder="Enter your email"
+                            class="flex-1 px-4 py-2 bg-sky-800 border border-sky-700 rounded-lg text-white placeholder-gray-400" />
+                        <button class="bg-custom text-white px-6 py-2 !rounded-button hover:bg-custom/90">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div
+                class="border-t border-sky-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+                <p class="text-gray-400">© 2024 InsightCare AI. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
