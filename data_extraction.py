@@ -39,7 +39,7 @@ def extract_ckd_data_from_image(img_path):
 
     # Configure API Key
     #genai.configure(api_key="AIzaSyC7GldrwOpYE4QYc36laArBvMaaysVWPWk")
-    client = genai.Client(api_key="AIzaSyC7GldrwOpYE4QYc36laArBvMaaysVWPWk")
+    client = genai.Client(api_key="API KEY")
 
     # Load the image
     image = Image.open(img_path)
